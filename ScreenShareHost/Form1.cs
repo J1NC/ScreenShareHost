@@ -54,7 +54,7 @@ namespace ScreenShareHost
             {
                 pbScreen.Image = BM;
             }
-            Debug.WriteLine(Cycle);
+
             Cycle++;
             if (Cycle % GCCollectCycle == 0)
                 GC.Collect();
