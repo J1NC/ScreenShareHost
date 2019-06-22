@@ -54,6 +54,7 @@ namespace ScreenShareHost
             {
                 pbScreen.Image = null;
                 timer1.Enabled = false;
+                lbHostId.Text = "";
                 client.Close();
             }
         }
