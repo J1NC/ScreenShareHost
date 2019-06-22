@@ -32,6 +32,8 @@
             this.pbScreen = new System.Windows.Forms.PictureBox();
             this.btnStreaming = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lbTitle = new System.Windows.Forms.Label();
+            this.lbHostId = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,17 +61,39 @@
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // lbTitle
+            // 
+            this.lbTitle.AutoSize = true;
+            this.lbTitle.Font = new System.Drawing.Font("굴림", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lbTitle.Location = new System.Drawing.Point(12, 12);
+            this.lbTitle.Name = "lbTitle";
+            this.lbTitle.Size = new System.Drawing.Size(234, 37);
+            this.lbTitle.TabIndex = 2;
+            this.lbTitle.Text = "ScreenShare";
+            // 
+            // lbHostId
+            // 
+            this.lbHostId.AutoSize = true;
+            this.lbHostId.Font = new System.Drawing.Font("굴림", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lbHostId.Location = new System.Drawing.Point(17, 150);
+            this.lbHostId.Name = "lbHostId";
+            this.lbHostId.Size = new System.Drawing.Size(0, 20);
+            this.lbHostId.TabIndex = 3;
+            // 
             // ScreenShare
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.lbHostId);
+            this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.btnStreaming);
             this.Controls.Add(this.pbScreen);
             this.Name = "ScreenShare";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -78,6 +102,8 @@
         private System.Windows.Forms.PictureBox pbScreen;
         private System.Windows.Forms.Button btnStreaming;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lbTitle;
+        private System.Windows.Forms.Label lbHostId;
     }
 }
 

@@ -4,7 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +19,9 @@ namespace ScreenShareHost
     {
         private Bitmap prevBitmap = null;
         private const int GCCollectCycle = 20;
+        private const string SERVER_ADDR = "http://192.168.1.9:3000";
         private int Cycle = 0;
+        private string id; 
 
         public ScreenShare()
         {
@@ -37,6 +43,7 @@ namespace ScreenShareHost
             if (timer1.Enabled == false)
             {
                 timer1.Enabled = true;
+                getId();
             }
             else
             {
@@ -113,6 +120,17 @@ namespace ScreenShareHost
             bmp2.UnlockBits(bitmapData2);
 
             return result;
+        }
+
+        private void getId()
+        {
+            string uri = SERVER_ADDR + "/host/getId";
+            WebClient webClient = new WebClient();
+            Stream stream = webClient.OpenRead(uri);
+            string responseJSON = new StreamReader(stream).ReadToEnd();
+            this.id = responseJSON;
+
+            lbHostId.Text = id + "\n이 코드를 웹에서 입력하십시오.";
         }
     }
 }
