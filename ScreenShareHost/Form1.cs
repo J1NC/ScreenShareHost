@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,12 @@ namespace ScreenShareHost
     {
         private Bitmap prevBitmap = null;
         private const int GCCollectCycle = 20;
-        private const string SERVER_ADDR = "http://192.168.1.9:3000";
+        private const string HOSTNAME = "192.168.1.9";
+        private const int PORT = 3000;
+        private const int TCP_PORT = 3001;
         private int Cycle = 0;
-        private string id; 
+        private string id;
+        private TcpClient client;
 
         public ScreenShare()
         {
@@ -44,6 +48,7 @@ namespace ScreenShareHost
             {
                 timer1.Enabled = true;
                 getId();
+                client = new TcpClient(HOSTNAME, TCP_PORT);
             }
             else
             {
@@ -62,6 +67,7 @@ namespace ScreenShareHost
             if (BM != null)
             {
                 pbScreen.Image = BM;
+                sendBitmap(BM);
             }
 
             Cycle++;
@@ -73,13 +79,12 @@ namespace ScreenShareHost
         {
             if (prevBitmap != null)
             {
-                if (CompareBitmaps(prevBitmap, bitmap))
-                {
-                    // 아무것도 안함
-                }
-                else
+                if (!CompareBitmaps(prevBitmap, bitmap))
                 {
                     // 서버로 전송
+                    Byte[] data = Encoding.Default.GetBytes(Convert.ToBase64String(ImageToByte(prevBitmap)) + "&end");
+                    NetworkStream stream = client.GetStream();
+                    stream.Write(data, 0, data.Length);
                 }
             }
             prevBitmap = (Bitmap)bitmap.Clone();
@@ -124,13 +129,19 @@ namespace ScreenShareHost
 
         private void getId()
         {
-            string uri = SERVER_ADDR + "/host/getId";
+            string uri = "http://" + HOSTNAME + ":" + PORT + "/host/getId";
             WebClient webClient = new WebClient();
             Stream stream = webClient.OpenRead(uri);
             string responseJSON = new StreamReader(stream).ReadToEnd();
             this.id = responseJSON;
 
-            lbHostId.Text = id + "\n이 코드를 웹에서 입력하십시오.";
+            lbHostId.Text = id + "\n이 코드를\n웹에서 입력하십시오.";
+        }
+
+        public static byte[] ImageToByte(Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
     }
 }
