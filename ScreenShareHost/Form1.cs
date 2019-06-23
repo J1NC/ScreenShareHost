@@ -20,7 +20,7 @@ namespace ScreenShareHost
     {
         private Bitmap prevBitmap = null;
         private const int GCCollectCycle = 20;
-        private const string HOSTNAME = "192.168.1.9";
+        private const string HOSTNAME = "10.80.161.110";
         private const int PORT = 3000;
         private const int TCP_PORT = 3001;
         private int Cycle = 0;
@@ -144,6 +144,12 @@ namespace ScreenShareHost
         {
             ImageConverter converter = new ImageConverter();
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
+
+        private void ScreenShare_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(client != null)
+                client.Close();
         }
     }
 }

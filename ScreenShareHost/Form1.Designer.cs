@@ -90,7 +90,8 @@
             this.Controls.Add(this.btnStreaming);
             this.Controls.Add(this.pbScreen);
             this.Name = "ScreenShare";
-            this.Text = "Form1";
+            this.Text = "ScreenShare";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScreenShare_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
